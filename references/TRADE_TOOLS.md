@@ -34,9 +34,9 @@
    *
    * @param orderId 订单ID：需要平仓的期权订单唯一标识（OwnerOrder.id）
    * @param price 平仓价格：期权合约的每股价格（美元）
-   * @param cannelTime? 平仓截止时间：订单将在此时间前尝试平仓，格式：yyyy-MM-dd HH:mm:ss
+   * @param cannelTime 平仓截止时间：订单将在此时间前尝试平仓，格式：yyyy-MM-dd HH:mm:ss
    * @param otp OTP验证码：用于交易安全验证，每次操作需要向用户获取最新的OTP验证码
    */
-  function closeOptionsPosition(orderId: string, price: number, cannelTime?: string, otp: string);
+  function closeOptionsPosition(orderId: string, price: number, cannelTime: string, otp: string);
 
 ```
