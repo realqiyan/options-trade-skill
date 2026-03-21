@@ -15,55 +15,38 @@ description: "股票与期权交易技能，通过本技能可以学会股票期
 
 #### 基础数据查询工具
 
-详细工具说明请参考 [BASE_QUERY_TOOLS.md](references/BASE_QUERY_TOOLS.md)，包括：
-
-- queryStockRealPrice - 查询股票实时价格。
-- queryStockCandlesticks - 查询股票K线数据（日K或周K）。返回结果包括指定数量的K线数据，每条K线包含日期、开盘价、收盘价、最高价、最低价、成交量和成交额。
-- queryStockIndicator - 查询股票技术指标数据。返回结果包含指定数量的历史数据，每条数据包括日期、布林带下轨/中轨/上轨、EMA20/EMA5/EMA50指数移动平均线、MACD指标(DEA/DIF)、RSI相对强弱指数等。
-- queryEarningsCalendar - 查询股票财报日历信息。包括财报日期、预期每股收益、实际每股收益(如已发布)等关键财务数据。
-- queryAllPosition - 查询用户所有持仓明细，包含股票和期权信息汇总，返回完整持仓表格，包含证券代码、证券名称、持仓数量（期权持仓数为负数表示卖出期权合约）、可卖数量、成本价、当前价等信息。
-- queryVixIndicator - 查询VIX恐慌指数指标。返回结果包括当前VIX值，帮助投资者评估市场情绪和风险水平。
+- 股票实时价格\股票K线数据\股票技术指标\股票财报日历\用户持仓明细\VIX恐慌指数指标
+- 详细工具说明请参考 [BASE_QUERY_TOOLS.md](references/BASE_QUERY_TOOLS.md)
 
 #### 期权查询工具
 
-详细工具说明请参考 [OPTIONS_QUERY_TOOLS.md](references/OPTIONS_QUERY_TOOLS.md)，包括：
-
-- queryAllStrategy - 查询用户所有期权交易策略列表。返回策略ID（strategyId）、名称、标的、扩展配置等（auto_trade为开启自动交易的策略）。
-- queryStrategyDetailAndOrders - 查询指定期权交易策略ID的策略详细信息汇总和策略订单。
-- queryStrategyRule - 查询期权交易策略规则。策略规则包含具体的交易规则、delta要求、行权日期选择要求、技术指标要求等详细信息。
-- queryOptionsExpDate - 查询指定股票的期权近10个到期日列表，返回到期日列表包含：到期日(strikeTime)、DTE、月期权｜周期权。
-- queryOptionsChain - 查询期权链详细信息，使用前请先使用queryOptionsExpDate工具获取有效的到期日。返回结果包括期权代码、类型(Call/Put)、行权价、当前价格、隐含波动率、希腊字母(Delta、Theta、Gamma)、未平仓合约数、当天交易量等完整信息。
-- queryOrderBook - 查询期权买卖盘报价数据。期权期权买卖盘信息，包括不同价位的买卖挂单数量和价格。
+- 期权交易策略\期权交易策略规则\期权到期日\期权链\期权买卖盘报价数据
+- 详细工具说明请参考 [OPTIONS_QUERY_TOOLS.md](references/OPTIONS_QUERY_TOOLS.md)
 
 #### 管理工具
 
-详细工具说明请参考 [MANAGE_TOOLS.md](references/MANAGE_TOOLS.md)，包括：
-
-- saveStrategy - 创建或更新用户期权策略。创建新策略时无需传入id和strategyId；更新策略时需传入id。返回保存后的策略详情，包含策略ID、名称、策略编码、标的代码、每手数量、状态等信息。
+- 期权交易策略管理
+- 详细工具说明请参考 [MANAGE_TOOLS.md](references/MANAGE_TOOLS.md)
 
 #### 交易执行工具
 
-详细工具说明请参考 [TRADE_TOOLS.md](references/TRADE_TOOLS.md)，包括：
-
-- syncAllOptionsOrders - [交易]从外部交易系统同步最新的订单状态和持仓信息，用于刷新订单数据。
-- submitOptionsOrder - [交易]提交期权交易订单，返回订单详情，包含订单ID(id)、订单费用、订单状态、平台订单号、交易时间、行权时间等订单基础信息。
-- modifyOptionsOrder - [交易]修改期权订单状态，支持取消订单(CANCEL)和删除订单(DELETE)操作，返回订单详情。
-- closeOptionsPosition - [交易]基于历史订单创建期权平仓单，支持设置平仓单有效时间。返回订单详情，包含订单ID(id)、订单费用、订单状态、平台订单号、交易时间、行权时间等订单基础信息。
-
-### 服务器信息
-
-- **服务器名称**: options-trade
+- 同步订单、提交订单、修改订单、创建平仓单
+- 详细工具说明请参考 [TRADE_TOOLS.md](references/TRADE_TOOLS.md)
 
 ### 工具使用方式
 
-- 使用前需要查看详细工具说明，确保理解参数含义和使用场景；
+- 使用前需请务必查询要调用的工具的详细工具说明，确保理解参数含义和参数的正确性；
 - 使用`mcporter call options-trade.<工具名> <参数>=<值>`命令调用相应工具；
 
 示例：
 
 ```bash
+# 查询所有期权交易策略
+mcporter call options-trade.queryAllStrategy
 # 查询AAPL最近30天的日K线
-mcporter call options-trade.queryStockCandlesticks code=AAPL market=11 periodCode=1000 count=30
+mcporter call options-trade.queryStockCandlesticks code=AAPL market=11 periodCode=DAY count=30
+# 查询AAPL最近30天的技术指标数据
+mcporter call options-trade.queryStockIndicator code=AAPL market=11 periodCode=DAY count=30
 ```
 
 ## 工作流程

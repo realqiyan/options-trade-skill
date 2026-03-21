@@ -15,7 +15,7 @@
    * @param quantity 期权合约的张数
    * @param price 期权合约的每股价格（元）
    * @param code 期权标的码：BABA260220C180000
-   * @param market 市场代码：1表示港股，11表示美股
+   * @param market 市场代码：1(港股)|11(美股)
    * @param otp OTP验证码：用于交易安全验证，每次操作需要向用户获取最新的OTP验证码
    */
   function submitOptionsOrder(strategyId: string, side: number, quantity: number, price: number, code: string, market: number, otp: string);

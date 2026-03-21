@@ -5,7 +5,7 @@
    * 查询股票实时价格。
    *
    * @param code 股票代码，如AAPL、TSLA等
-   * @param market 市场代码：1表示港股，11表示美股
+   * @param market 市场代码：1(港股)|11(美股)
    * @returns 返回对象包含：
    *   - code: 股票代码
    *   - market: 市场代码
@@ -17,8 +17,8 @@
    * 查询股票K线数据（日K或周K）。返回结果包括指定数量的K线数据，每条K线包含日期、开盘价、收盘价、最高价、最低价、成交量和成交额。
    *
    * @param code 股票代码，如AAPL、TSLA等
-   * @param market 市场代码：1表示港股，11表示美股
-   * @param periodCode K线类型：1000表示日K线，2000表示周K线
+   * @param market 市场代码：1(港股)|11(美股)
+   * @param periodCode K线类型：DAY|WEEK
    * @param count K线数量，最多可查询500条数据
    * @returns 返回对象包含：
    *   - code: 股票代码
@@ -40,8 +40,8 @@
    * 查询股票技术指标数据。返回结果包含指定数量的历史数据，每条数据包括日期、布林带下轨/中轨/上轨、EMA20/EMA5/EMA50指数移动平均线、MACD指标(DEA/DIF)、RSI相对强弱指数等。
    *
    * @param code 股票代码，如AAPL、TSLA等
-   * @param market 市场代码：1表示港股，11表示美股
-   * @param periodCode 指标周期：1000表示日线指标，2000表示周线指标
+   * @param market 市场代码：1(港股)|11(美股)
+   * @param periodCode 指标周期：DAY|WEEK
    * @param count 指标数量，最多可查询500条数据
    * @returns 返回对象包含：
    *   - code: 股票代码
