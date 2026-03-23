@@ -40,13 +40,7 @@
    *     - optionsGamma: 策略总体Options Gamma
    *     - optionsTheta: 策略总体Options Theta
    *     - openOptionsQuantity: 策略未平仓的持有期权合约数
-   *     - openOptionsCallQuantity: 策略未平仓的Call期权合约数
-   *     - openOptionsPutQuantity: 策略未平仓的Put期权合约数
    *     - avgDelta: 策略平均每股Delta
-   *     - totalFee: 总手续费
-   *     - allOptionsIncome: 期权总收益(已扣除手续费)
-   *     - allIncome: 策略所有交易总收益（包含股票和期权收益）
-   *     - unrealizedOptionsIncome: 未实现期权收益
    *     - holdStockNum: 持有股票数
    *     - holdStockCost: 持有股票成本价
    *     - holdStockProfit: 持股盈亏
@@ -67,6 +61,9 @@
    *     - groupId: 订单组ID（平台订单ID）
    *     - tradeFrom: 订单来源
    *     - subOrder: 是否为子订单
+   *     - isOpen: 是否未平仓（期权订单特有，值为"未平仓"或"已平仓"）
+   *     - groupTotalIncome: 分组累计收益（分组订单特有）
+   *     - groupTotalOrderFee: 分组累计手续费（分组订单特有）
    *   - orderGroups: 订单分组Map，key为groupId，value包含：
    *     - totalIncome: 累计收益
    *     - totalOrderFee: 累计手续费
