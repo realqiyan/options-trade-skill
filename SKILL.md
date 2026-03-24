@@ -1,6 +1,6 @@
 ---
 name: "options-trade-skill"
-description: "股票与期权交易技能，通过本技能可以学会股票期权交易策略，同时提供了股价查询、K线查询、技术指标查询、交易相关的能力。当用户进行期权交易咨询、股票价格走势分析、技术指标查询、交易策略建议、期权交易或股票相关服务时使用此技能。"
+description: "期权交易助手技能，提供完整的期权交易决策支持。**触发场景**：用户询问期权相关问题时必须使用此技能，包括但不限于：期权策略（车轮策略、备兑看涨）、期权链查询、delta/theta/gamma等希腊字母分析、期权到期日选择、期权开仓/平仓决策、权利金年化收益率计算。同时也支持股票技术分析：股价查询、K线数据、技术指标（MACD、RSI、布林带）、VIX恐慌指数。当用户提到"期权"、"option"、"策略"、"delta"、"行权价"、"到期日"等关键词时，即使没有明确请求交易，也应使用此技能提供专业分析。"
 ---
 
 # 股票与期权交易助手
@@ -51,13 +51,20 @@ mcporter call options-trade.queryStockIndicator code=AAPL market=11 periodCode=D
 
 ## 工作流程
 
-### 股票和期权分析流程
+### 股票技术分析流程
 
-当用户的问题涉及股票技术分析时，详细流程请参考 [STOCK_ANALYSIS_WORKFLOW.md](references/STOCK_ANALYSIS_WORKFLOW.md)。
+详细流程请参考 [STOCK_ANALYSIS_WORKFLOW.md](references/STOCK_ANALYSIS_WORKFLOW.md)。
 
 ### 期权策略交易流程
 
-当用户涉及期权交易、期权机会相关问题时，详细流程请参考 [OPTIONS_TRADING_WORKFLOW.md](references/OPTIONS_TRADING_WORKFLOW.md)。
+详细流程及计算规则请参考 [OPTIONS_TRADING_WORKFLOW.md](references/OPTIONS_TRADING_WORKFLOW.md)，包括：
+- 交易决策流程
+- 年化收益率计算
+- Delta计算
+- 组合订单收益计算（Roll操作识别）
+- 止盈止损规则
+
+**策略规则**通过 `queryStrategyRule` 工具动态获取。
 
 ### 交易执行注意事项
 
@@ -76,6 +83,7 @@ mcporter call options-trade.queryStockIndicator code=AAPL market=11 periodCode=D
    - `orderId` 对应 `OwnerOrder.id`
 4. **期权持仓数**：负数表示卖出期权合约
 5. **财报查询**：股票代码不区分大小写
+6. **组合订单收益**：`groupId` 相同的订单必须合并计算收益，不可单独判断盈亏（详见 [OPTIONS_TRADING_WORKFLOW.md](references/OPTIONS_TRADING_WORKFLOW.md)）
 
 ## 故障排除
 

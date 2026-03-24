@@ -1,0 +1,35 @@
+{
+  "skill_name": "options-trade-skill",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "帮我分析一下BABA当前适合做什么期权策略",
+      "expected_output": "查询所有策略、获取BABA期权链数据、分析delta和年化收益、给出策略建议",
+      "assertions": []
+    },
+    {
+      "id": 2,
+      "prompt": "我的车轮策略近期需要调整吗",
+      "expected_output": "查询策略详情、分析持仓和订单、检查近期Roll操作、给出调整建议",
+      "assertions": []
+    },
+    {
+      "id": 3,
+      "prompt": "帮我看看AAPL的技术指标，适合卖出看涨期权吗",
+      "expected_output": "查询AAPL股价、K线数据、技术指标、分析趋势、判断是否适合CC策略",
+      "assertions": []
+    },
+    {
+      "id": 4,
+      "prompt": "我的Put被指派了，接下来该怎么办",
+      "expected_output": "查询策略详情、确认持仓状态、根据车轮策略规则给出Sell Call建议",
+      "assertions": []
+    },
+    {
+      "id": 5,
+      "prompt": "帮我计算一下这个期权的年化收益率：股价$125，期权价格$2.5，DTE=30天",
+      "expected_output": "使用年化收益率公式计算：(2.5×100)/30×365/125×100 = 24.33%",
+      "assertions": []
+    }
+  ]
+}
