@@ -55,7 +55,7 @@ function queryAllStrategy();
  * // -- tradeTime: 交易时间
  * // -- strikeTime: 行权时间
  * // -- status: 订单状态（已成交、已撤销、等待成交等）
- * // -- groupId: 订单组ID（平台订单ID）
+ * // -- groupId: 订单组ID（当多笔订单具有相同的 `groupId` 时，表示它们属于同一笔交易操作，如Roll操作。）
  * // -- tradeFrom: 订单来源
  * // -- subOrder: 是否为子订单
  * // -- isOpen: 是否未平仓（期权订单特有，值为"未平仓"或"已平仓"）
