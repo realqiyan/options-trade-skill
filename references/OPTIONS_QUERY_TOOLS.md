@@ -72,6 +72,39 @@
   function queryStrategyDetailAndOrders(strategyId: string);
 
   /**
+   * ### 订单组（groupId）收益计算规则
+   *
+   * 当多笔订单具有相同的 `groupId` 时，表示它们属于同一笔交易操作（如Roll操作）。
+   *
+   * **收益计算规则：**
+   * - 组合净收益 = Σ 该组所有订单的收益之和
+   * - 组合手续费 = Σ 该组所有订单的手续费之和
+   * - **不可单独看某一笔订单判断整体盈亏**
+   *
+   * **常见场景：Roll操作**
+   * - 平仓单：买入期权平仓，支付权利金（收益为负）
+   * - 新订单：卖出新期权，收取权利金（收益为正）
+   * - 两笔订单 groupId 相同
+   *
+   * **示例：Roll Out Sell Put**
+   * ```
+   * 平仓单：买入PUT平仓，花费 $100（收益 -$100）
+   * 新订单：卖出新PUT，收取 $95（收益 +$95）
+   * groupId：两笔订单相同
+   *
+   * 正确计算：组合净收益 = -$100 + $95 = -$5
+   * ❌ 错误：只看新订单认为盈利$95
+   * ✅ 正确：合并同groupId订单计算净收益
+   * ```
+   *
+   * **判断逻辑：**
+   * 1. 检查订单是否有 groupId
+   * 2. 若有，找出同 groupId 的所有订单
+   * 3. 合并计算收益和手续费
+   * 4. 基于**组合净收益**判断整体盈亏
+   */
+
+  /**
    * 查询期权交易策略规则。策略规则包含具体的交易规则、delta要求、行权日期选择要求、技术指标要求等详细信息。
    *
    * @param strategyCode? 期权策略编码，可选值：cc_strategy(备兑看涨策略)、wheel_strategy(车轮策略)、default(默认卖期权策略)，不指定时返回所有策略。
@@ -94,7 +127,11 @@
   function queryOptionsExpDate(code: string, market: number);
 
   /**
-   * 查询期权链详细信息，使用前请先使用queryOptionsExpDate工具获取有效的到期日。返回结果包括期权代码、类型(Call/Put)、行权价、当前价格、隐含波动率、希腊字母(Delta、Theta、Gamma)、未平仓合约数、当天交易量等完整信息。
+   * 查询期权链详细信息，使用前请先使用queryOptionsExpDate工具获取有效的到期日。返回结果包括期权代码、类型(Call/Put)、当前价格、隐含波动率、希腊字母(Delta、Theta、Gamma)、未平仓合约数、当天交易量等完整信息。
+   *
+   * **注意**：期权链数据不直接返回行权价，需从期权代码中解析。解析规则：
+   *   - 期权代码格式：`{标的}{到期日}{类型}{行权价}`，如 `BABA260417P130000`
+   *   - 最后5-8位数字为行权价（需除以1000），如 `130000` → 行权价 $130
    *
    * @param code 股票代码，如AAPL、TSLA等
    * @param market 市场代码：1(港股)|11(美股)
@@ -127,7 +164,7 @@
   function queryOptionsChain(code: string, market: number, strikeDate: string, filterType: string, tradeType: string);
 
   /**
-   * 查询期权买卖盘报价数据。期权期权买卖盘信息，包括不同价位的买卖挂单数量和价格。
+   * 查询期权买卖盘报价数据。返回当前最优买价和卖价。
    *
    * @param code 期权代码，如AAPL250620C150等
    * @param market 市场代码：1(港股)|11(美股)
@@ -135,8 +172,8 @@
    *   - data: 买卖盘数据
    *     - code: 期权代码
    *     - market: 市场代码
-   *     - bidList: 买盘价格列表（按价格优先级排序）
-   *     - askList: 卖盘价格列表（按价格优先级排序）
+   *     - bidList: 买盘价格列表（当前最优买价）
+   *     - askList: 卖盘价格列表（当前最优卖价）
    */
   function queryOrderBook(code: string, market: number);
 

@@ -23,7 +23,7 @@
    * @returns 返回对象包含：
    *   - code: 股票代码
    *   - market: 市场代码
-   *   - period: K线类型名称（如"日K"、"周K"）
+   *   - period: K线类型名称（如"日"、"周"）
    *   - count: K线数量
    *   - data: K线数据数组，每条数据包含：
    *     - date: 日期（YYYY-MM-DD格式）
@@ -34,7 +34,7 @@
    *     - volume: 成交量
    *     - turnover: 成交额
    */
-  function queryStockCandlesticks(code: string, market: number, periodCode: number, count: number);
+  function queryStockCandlesticks(code: string, market: number, periodCode: "DAY" | "WEEK", count: number);
 
   /**
    * 查询股票技术指标数据。返回结果包含指定数量的历史数据，每条数据包括日期、布林带下轨/中轨/上轨、EMA20/EMA5/EMA50指数移动平均线、MACD指标(DEA/DIF)、RSI相对强弱指数等。
@@ -46,7 +46,7 @@
    * @returns 返回对象包含：
    *   - code: 股票代码
    *   - market: 市场代码
-   *   - period: 指标周期名称（如"日线"、"周线"）
+   *   - period: 指标周期名称（如"日"、"周"）
    *   - count: 指标数量
    *   - data: 指标数据数组，每条数据包含：
    *     - date: 日期（YYYY-MM-DD格式）
@@ -56,12 +56,13 @@
    *     - EMA20: 20日指数移动平均线
    *     - EMA5: 5日指数移动平均线
    *     - EMA50: 50日指数移动平均线
-   *     - MACD_DEA: MACD指标DEA线
-   *     - MACD_DIF: MACD指标DIF线
+   *     - MACD: MACD柱状图（DIF - DEA）
+   *     - MACD_DEA: MACD指标DEA线（信号线）
+   *     - MACD_DIF: MACD指标DIF线（快线）
    *     - RSI: RSI相对强弱指数
    *     - 其他技术指标...
    */
-  function queryStockIndicator(code: string, market: number, periodCode: number, count: number);
+  function queryStockIndicator(code: string, market: number, periodCode: "DAY" | "WEEK", count: number);
 
   /**
    * 查询股票财报日历信息。包括财报日期、预期每股收益、实际每股收益(如已发布)等关键财务数据。
