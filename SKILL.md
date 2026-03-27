@@ -1,6 +1,6 @@
 ---
-name: "options-trade-skill"
-description: "期权交易助手技能，提供完整的期权交易决策支持。**触发场景**：用户询问期权相关问题时必须使用此技能，包括但不限于：期权策略（车轮策略、备兑看涨）、期权链查询、delta/theta/gamma等希腊字母分析、期权到期日选择、期权开仓/平仓决策、权利金年化收益率计算。同时也支持股票技术分析：股价查询、K线数据、技术指标（MACD、RSI、布林带）、VIX恐慌指数。当用户提到"期权"、"option"、"策略"、"delta"、"行权价"、"到期日"等关键词时，即使没有明确请求交易，也应使用此技能提供专业分析。"
+name: options-trade-skill
+description: 股票与期权交易助手。支持期权策略分析、期权链查询、希腊值分析、开平仓决策、股票技术分析。触发词：期权、Put、Call、车轮策略、备兑、年化收益、delta、股价、K线、MACD、RSI、VIX。
 ---
 
 # 股票与期权交易助手
@@ -35,18 +35,30 @@ description: "期权交易助手技能，提供完整的期权交易决策支持
 
 ### 工具使用方式
 
-- 使用前需请务必查询要调用的工具的详细工具说明，确保理解参数含义和参数的正确性；
-- 使用`mcporter call options-trade.<工具名> <参数>=<值>`命令调用相应工具；
+**⚠️ 重要：每次调用工具前，必须先阅读对应的工具说明文件，确保理解参数含义！**
+
+工具说明文件索引：
+| 工具类别 | 说明文件 |
+|---------|---------|
+| 基础查询（股价、K线、技术指标、持仓） | `references/BASE_QUERY_TOOLS.md` |
+| 期权查询（策略、期权链、到期日） | `references/OPTIONS_QUERY_TOOLS.md` |
+| 交易执行（提交、修改、平仓） | `references/TRADE_TOOLS.md` |
+| 策略管理 | `references/MANAGE_TOOLS.md` |
+
+调用方式：使用 Bash 工具执行 CLI 命令
+
+```bash
+mcporter call options-trade.<工具名> <参数>=<值>
+```
 
 示例：
 
 ```bash
 # 查询所有期权交易策略
 mcporter call options-trade.queryAllStrategy
+
 # 查询AAPL最近30天的日K线
 mcporter call options-trade.queryStockCandlesticks code=AAPL market=11 periodCode=DAY count=30
-# 查询AAPL最近30天的技术指标数据
-mcporter call options-trade.queryStockIndicator code=AAPL market=11 periodCode=DAY count=30
 ```
 
 ## 工作流程
