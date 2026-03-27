@@ -3,33 +3,123 @@
   "evals": [
     {
       "id": 1,
+      "name": "options-strategy-analysis",
       "prompt": "帮我分析一下BABA当前适合做什么期权策略",
       "expected_output": "查询所有策略、获取BABA期权链数据、分析delta和年化收益、给出策略建议",
-      "assertions": []
+      "assertions": [
+        {
+          "type": "tool_call",
+          "tool": "queryAllStrategy",
+          "description": "必须调用 queryAllStrategy 查询所有策略"
+        },
+        {
+          "type": "tool_call",
+          "tool": "queryOptionsExpDate",
+          "description": "必须调用 queryOptionsExpDate 获取BABA到期日"
+        },
+        {
+          "type": "tool_call",
+          "tool": "queryOptionsChain",
+          "description": "必须调用 queryOptionsChain 获取期权链数据"
+        },
+        {
+          "type": "output_contains",
+          "keywords": ["年化收益", "delta", "建议"],
+          "description": "输出应包含年化收益、delta分析和策略建议"
+        }
+      ]
     },
     {
       "id": 2,
+      "name": "wheel-strategy-adjustment",
       "prompt": "我的车轮策略近期需要调整吗",
       "expected_output": "查询策略详情、分析持仓和订单、检查近期Roll操作、给出调整建议",
-      "assertions": []
+      "assertions": [
+        {
+          "type": "tool_call",
+          "tool": "queryAllStrategy",
+          "description": "必须调用 queryAllStrategy 查询用户策略"
+        },
+        {
+          "type": "tool_call",
+          "tool": "queryStrategyDetailAndOrders",
+          "description": "必须调用 queryStrategyDetailAndOrders 获取策略详情"
+        },
+        {
+          "type": "output_contains",
+          "keywords": ["持仓", "delta", "调整"],
+          "description": "输出应包含持仓分析、delta状态和调整建议"
+        }
+      ]
     },
     {
       "id": 3,
+      "name": "technical-analysis-for-cc",
       "prompt": "帮我看看AAPL的技术指标，适合卖出看涨期权吗",
       "expected_output": "查询AAPL股价、K线数据、技术指标、分析趋势、判断是否适合CC策略",
-      "assertions": []
+      "assertions": [
+        {
+          "type": "tool_call",
+          "tool": "queryStockRealPrice",
+          "description": "必须调用 queryStockRealPrice 获取AAPL股价"
+        },
+        {
+          "type": "tool_call",
+          "tool": "queryStockIndicator",
+          "description": "必须调用 queryStockIndicator 获取技术指标"
+        },
+        {
+          "type": "output_contains",
+          "keywords": ["MACD", "RSI", "趋势"],
+          "description": "输出应包含MACD、RSI等技术指标分析"
+        },
+        {
+          "type": "output_contains",
+          "keywords": ["看涨期权", "CC", "适合"],
+          "description": "输出应给出是否适合卖出看涨期权的判断"
+        }
+      ]
     },
     {
       "id": 4,
+      "name": "put-assignment-handling",
       "prompt": "我的Put被指派了，接下来该怎么办",
       "expected_output": "查询策略详情、确认持仓状态、根据车轮策略规则给出Sell Call建议",
-      "assertions": []
+      "assertions": [
+        {
+          "type": "tool_call",
+          "tool": "queryAllStrategy",
+          "description": "必须调用 queryAllStrategy 查询用户策略"
+        },
+        {
+          "type": "tool_call",
+          "tool": "queryStrategyDetailAndOrders",
+          "description": "必须调用 queryStrategyDetailAndOrders 获取持仓状态"
+        },
+        {
+          "type": "output_contains",
+          "keywords": ["Sell Call", "看涨期权", "车轮策略"],
+          "description": "输出应根据车轮策略建议卖出看涨期权"
+        }
+      ]
     },
     {
       "id": 5,
+      "name": "annual-yield-calculation",
       "prompt": "帮我计算一下这个期权的年化收益率：股价$125，期权价格$2.5，DTE=30天",
       "expected_output": "使用年化收益率公式计算：(2.5×100)/30×365/125×100 = 24.33%",
-      "assertions": []
+      "assertions": [
+        {
+          "type": "output_contains",
+          "keywords": ["24.3", "24.33"],
+          "description": "输出应包含正确的年化收益率计算结果（约24.3%）"
+        },
+        {
+          "type": "output_contains",
+          "keywords": ["年化收益", "计算"],
+          "description": "输出应说明年化收益率的计算过程"
+        }
+      ]
     }
   ]
 }

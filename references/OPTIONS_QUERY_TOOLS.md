@@ -121,8 +121,8 @@ function queryOptionsExpDate(code: string, market: number);
  * // -- volume: 成交量
  * // -- timeValue: 时间价值
  * // -- intrinsicValue: 内在价值
- * // -- sellAnnualYield: 卖出年化收益率（带%符号）
- * // -- strikePriceDistance: 行权价距离现价涨跌幅（带%符号）
+ * // -- sellAnnualYield: 卖出年化收益率（百分比数值，如24.33表示24.33%）
+ * // -- strikePriceDistance: 行权价距离现价涨跌幅（百分比数值，如-3.5表示-3.5%）
  *
  * @param code 股票代码，如AAPL、TSLA等
  * @param market 市场代码：1(港股)|11(美股)
@@ -160,7 +160,7 @@ function queryOrderBook(code: string, market: number);
  * // -- tradeTime: 交易时间
  * // -- strikeTime: 行权时间
  * // -- status: 订单状态（已成交、已撤销、等待成交等）
- * // -- groupId: 订单组ID（平台订单ID）
+ * // -- groupId: 订单组ID（相同groupId的订单属于同一笔组合交易，如Roll操作）
  * // -- tradeFrom: 订单来源
  * // -- subOrder: 是否为子订单
  * // -- isOpen: 是否未平仓（期权订单特有，值为"未平仓"或"已平仓"）
