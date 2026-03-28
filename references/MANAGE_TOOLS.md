@@ -29,4 +29,25 @@
  * @param extJson? 扩展配置JSON字符串，如：{"auto_trade":"true","target_delta":"0.3"}
  */
 function saveStrategy(id?: number, strategyName: string, strategyCode: string, code: string, lotSize: number, stage: string, status?: number, extJson?: string);
+
+/**
+ * [策略]将一个策略绑定多个订单，支持部分成功返回明细。
+ *
+ * //returns 返回对象包含：
+ * // - data: 绑定结果
+ * // -- owner: 用户编码
+ * // -- strategyId: 策略ID
+ * // -- strategyCode: 策略标的代码
+ * // -- totalCount: 总订单数
+ * // -- successCount: 成功数量
+ * // -- failureCount: 失败数量
+ * // -- partialSuccess: 是否部分成功
+ * // -- message: 汇总消息
+ * // -- successList: 成功明细
+ * // -- failureList: 失败明细（含errorCode/message）
+ *
+ * @param strategyId 策略ID（strategyId）
+ * @param orderIds 订单ID列表（如[1,2,3]）
+ */
+function bindStrategyOrders(strategyId: string, orderIds: number[]);
 ```
