@@ -31,6 +31,25 @@
 function saveStrategy(id?: number, strategyName: string, strategyCode: string, code: string, lotSize: number, stage: string, status?: number, extJson?: string);
 
 /**
+ * 查询草稿订单列表，即未绑定策略的订单。
+ *
+ * //returns 返回对象包含：
+ * // - data: 草稿订单数组
+ * // -- id: 订单ID
+ * // -- strategyId: 策略ID（为空表示未绑定）
+ * // -- code: 证券代码
+ * // -- market: 市场代码
+ * // -- side: 订单方向
+ * // -- price: 交易价格
+ * // -- quantity: 交易数量
+ * // -- tradeTime: 交易时间
+ * // -- strikeTime: 行权时间
+ * // -- status: 订单状态
+ * // -- ext: 扩展信息
+ */
+function queryDraftOrders();
+
+/**
  * [策略]将一个策略绑定多个订单，支持部分成功返回明细。
  *
  * //returns 返回对象包含：
