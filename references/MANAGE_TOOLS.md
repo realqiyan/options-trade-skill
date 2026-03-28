@@ -47,7 +47,7 @@ function saveStrategy(id?: number, strategyName: string, strategyCode: string, c
  * // -- failureList: 失败明细（含errorCode/message）
  *
  * @param strategyId 策略ID（strategyId）
- * @param orderIds 订单ID列表（如[1,2,3]）
+ * @param orderIds 订单ID列表JSON字符串（如"[1,2,3]"）
  */
-function bindStrategyOrders(strategyId: string, orderIds: number[]);
+function bindStrategyOrders(strategyId: string, orderIds: string);
 ```
